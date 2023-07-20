@@ -133,3 +133,43 @@ rnorm(n=5, mean=50, sd=5)
 
 #random number following uniform distribution
 runif(n=5, min = 0, max = 10)
+
+
+##transforming data structure
+table2_1 = read.csv("examples/table2_1.csv")
+
+#df to vectors
+v1 = as.vector(table2_1$统计学); v1
+v2 = as.vector(c(table2_1$统计学,table2_1$数学)); v2
+
+#df to matrix
+mat1 = as.matrix(table2_1[,2:4]); mat1
+v3 = as.vector(mat1); v3
+
+#interchange: df and matrix
+table2_1 = read.csv("examples/table2_1.csv")
+mat = as.matrix(table2_1); mat
+#set row and column names
+rownames(mat) = table2_1[,1] #use 姓名 as row names
+mat
+
+#matrix to df
+as.data.frame(mat)
+
+#from short format to long format
+table2_1 = read.csv("examples/table2_1.csv"); table2_1 #this is a short format
+#using melt from package:reshape2
+library(reshape2)
+df1 = melt(table2_1, id.vars="姓名", variable.name="课程", value.name="分数")
+df1 #this is a long format
+
+#using gather from package:tidyr
+library(tidyr)
+df2 = gather(table2_1, key = "课程", value="分数","统计学","数学","经济学");df2
+
+##Frequency Distribution Table
+example2_2 = read.csv("examples/example2_2.csv"); head(example2_2)
+prop.table(tab1)*100 #find percentages
+
+#2-D contingency table
+
