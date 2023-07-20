@@ -86,3 +86,50 @@ arrange(table2_1, desc(姓名)) #arrange (sort) by 姓名 decreasingly
 #sorting using order()
 table2_2[order(table2_2$姓名),] #sort by 姓名 ascendingly
 table2_2[order(table2_2$统计学,decreasing = TRUE),] #sort by 统计学 descendingly
+
+#factor (categorical variables)
+v = c("金融", "地产", "医药","医药", "金融", "医药")
+f1 = factor(v); f1
+as.numeric(f1)
+
+#convert to ordinal factors
+b = c("very good", "good", "moderate", "bad", "very bad")
+f2 = factor(b, ordered=TRUE, levels = )
+f2
+as.numeric(f2)
+
+##data sampling
+df = read.csv("examples/example2_1.csv")
+n1 = sample(df$姓名,size=10); n1 #sample 10 students without replacement
+n2 = sample(df$姓名,size=10,replace=TRUE); n2 #sample 10 students with replacement
+
+#sample 10 testing scores
+n3 = sample(df$考试分数, size=10); n3
+n4 = sample(df$考试分数, size=10); n4
+
+#set random seed
+set.seed(1)
+
+##Selecting data
+df = read.csv("examples/example2_1.csv")
+sample(df$姓名[df$考试分数<60])
+df[df$考试分数<60,]
+
+sample(df$姓名[df$考试分数>=90])
+sample(df$姓名[df$专业=="会计学"])
+
+#using filter()
+library(dplyr)
+filter(df, 考试分数>=90)
+filter(df, 性别=="女" & 专业=="会计学")
+filter(df, 性别=="女" & 专业=="会计学" & 考试分数>=90)
+
+##generate random numbers
+#random number following normal distribution
+rnorm(n=5, mean=0, sd=1)
+
+set.seed(15)
+rnorm(n=5, mean=50, sd=5)
+
+#random number following uniform distribution
+runif(n=5, min = 0, max = 10)
