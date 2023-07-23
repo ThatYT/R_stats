@@ -172,4 +172,84 @@ example2_2 = read.csv("examples/example2_2.csv"); head(example2_2)
 prop.table(tab1)*100 #find percentages
 
 #2-D contingency table
+example2_2 = read.csv("examples/example2_2.csv"); head(example2_2)
+attach(example2_2) #attach df, access items in df without actually calling df
+tab2 = table(态度,社区);tab2
 
+#without attach
+tab2 = table(example2_2$态度, example2_2$社区); tab2
+
+#add margins
+addmargins(tab2)
+
+#convert to percentages
+addmargins(prop.table(tab2)*100)
+
+
+#higher dimensional contingency table
+
+#use ftable
+example2_2 = read.csv("examples/example2_2.csv"); head(example2_2)
+tab3 = ftable(example2_2, row.vars = c("性别", "态度"), col.vars = "社区")
+tab3
+#add margins
+ftable(addmargins(table(example2_2$性别, example2_2$态度, example2_2$社区)))
+addmargins(table(example2_2$性别, example2_2$态度, example2_2$社区))
+
+
+#using structable() from package:vcd
+library(vcd)
+structable(性别+态度~社区, data=example2_2)
+
+#interchange contingency table and data frames
+library(DescTools)
+mytable = ftable(example2_2)
+df = Untable(mytable)
+
+#from contingency table to df with frequency
+tab = ftable(example2_2); tab #frequency table
+df = as.data.frame(tab); df
+
+#decriptive analysis of frequency table
+#1 Dimensional analysis
+example2_2 = read.csv("examples/example2_2.csv")
+library(DescTools)
+Desc(example2_2$社区)
+
+#2 Dimensional analysis
+Desc(table(example2_2$性别, example2_2$态度))
+
+# Multi dimensional analysis
+Desc(table(example2_2))
+
+
+##Categorization
+example2_1 = read.csv("examples/example2_1.csv")
+head(example2_1)
+dim(example2_1)
+
+#decide number of groups K
+#K = 1+lg(n)/lg(2)
+n = dim(example2_1)[1];n
+K = 1 + log10(n)/log10(2);K
+K = floor(K);K
+
+#cut into groups
+library(DescTools)
+tab1 = Freq(example2_1$考试分数, breaks = K); tab1
+tab2 = Freq(
+  example2_1$考试分数, #specify data
+  breaks = c(50,60,70,80,90,100), #specify intervals
+  right = FALSE #[,)
+  ) 
+tab2
+
+library(scales)
+tab2 = data.frame(
+  分组 = tab2$level,
+  频数 = tab2$freq,
+  百分比 = percent(tab2$perc),
+  累积频数 = tab2$cumfreq,
+  累积百分比 = percent(tab2$cumperc)
+)
+print(tab2, digits = 3) #3 digits
