@@ -97,3 +97,51 @@ legend(
   ncol = 1,
   inset = 0.02
 )
+
+#Color palettes
+library(RColorBrewer)
+par(mfrow=c(2,3),
+    mai = c(0.4, 0.3, 0.3, 0.1),
+    cex = 0.7,
+    font.main = 1
+)
+palette1 = brewer.pal(7, "Reds") #7 continuous red
+palette2 = brewer.pal(7, "Set1") #7 discrete colors
+palette3 = brewer.pal(7, "RdBu") #7 Red to blue continuous color
+palette4 = rev(brewer.pal(7, "Greens")) #reverse palette colors
+palette5 = brewer.pal(8, "Spectral")[-1] #drop the first color, keep the 7 rests
+palette6 = brewer.pal(6, "RdYlBu")[2:4] #use the 2nd to 4th colors
+
+h = 1:7; names = LETTERS[1:7]
+barplot(
+  h,
+  names = names,
+  col = palette1,
+  main = "(A) 7 continuous red"
+)
+barplot(
+  h,
+  names = names,
+  col = palette2,
+  main = "(B) 7 discrete colors"
+)
+barplot(
+  h, names = names,
+  col = palette3,
+  main = "(C) 7 Red to Blue continuous color"
+)
+barplot(
+  h, names = names,
+  col = palette4,
+  main = "(D) Reverse palette colors"
+)
+barplot(
+  h, names = names,
+  col = palette5,
+  main = "(E) remove the first color"
+)
+barplot(
+  h, names = names,
+  col = palette6,
+  main = "(F) use colors 2:4"
+)
